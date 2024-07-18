@@ -8,6 +8,11 @@ services:
       - ./backend:/app
     command: ['python', 'main.py']
   frontend:
-      build: ./frontend
-      ports: 
-        - '3000:3000'
+    build: ./frontend
+    ports: 
+      - '3000:3000'
+    volumes:
+      - ./frontend:/app
+    environment:
+      - WATCHPACK_POLLING=true
+    command: ['npm', 'start']

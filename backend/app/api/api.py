@@ -16,4 +16,4 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "Hi Bilal, ??Welcome to taskMaster!"}
+    return {"message": "Hi Bilal, Welcome to taskMaster!"}
