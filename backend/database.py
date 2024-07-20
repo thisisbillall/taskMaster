@@ -1,17 +1,12 @@
-import os
-from sqlalchemy import create_engine
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
 
-load_dotenv()
+DATABASE_URL = "postgres://avnadmin:AVNS_ix5U9sNrqvcgFadjTUj@tastmaster-prexion-prexionai.i.aivencloud.com:22306/defaultdb?sslmode=require"
 
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"sslmode": "require"})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+engine = create_async_engine(DATABASE_URL, echo=True, connect_args={"sslmode": "require"})
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+AsyncSessionLocal = sessionmaker(
+    bind=engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+)

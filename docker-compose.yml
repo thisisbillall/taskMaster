@@ -2,17 +2,21 @@ version: '3.9'
 
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - '8080:8080'
+      - '8080:8000'  # Map port 8000 inside the container to port 8080 on the host
     volumes:
       - ./backend:/app
-    env_file:
-      - ./backend/.env
-    command: ['uvicorn', 'api:app', '--host', '0.0.0.0', '--port', '8080', '--reload']
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://avnadmin:AVNS_ix5U9sNrqvcgFadjTUj@tastmaster-prexion-prexionai.i.aivencloud.com:22306/defaultdb?sslmode=require
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports: 
       - '3000:3000'
     volumes:
