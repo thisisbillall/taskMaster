@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = "postgres://avnadmin:AVNS_ix5U9sNrqvcgFadjTUj@tastmaster-prexion-prexionai.i.aivencloud.com:22306/defaultdb?sslmode=require"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_async_engine(DATABASE_URL, echo=True, connect_args={"sslmode": "require"})
 
